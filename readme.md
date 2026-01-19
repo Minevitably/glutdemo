@@ -2,9 +2,11 @@
 
 [微软官方文档](https://learn.microsoft.com/en-us/vcpkg/get_started/get-started-vscode?pivots=shell-powershell)
 
+[源码](https://github.com/Minevitably/glutdemo)
+
 # 1 使用vcpkg安装freeglut
 
-安装`freeglut`
+安装`freeglut`（这一步可有可无，毕竟项目编译时本就会从`vcpkg`源拉取`freeglut`源码并在`build`目录下进行编译，这里保留该步骤仅用于展示下述两种配置方案）
 
 ```bash
 vcpkg install freeglut
@@ -44,7 +46,7 @@ vcpkg new --application
 
 根目录下会生成一个清单文件（包含项目中要用到的库，默认为空）`vcpkg.json`​，以及一个包管理器配置文件（配置包的来源，以及版本锁定，方便团队协作）`vcpkg-configuration.json`
 
-通过`vcpkg-configuration.json`​配置后的项目即使在完全更换开发环境后（不同版本的`vcpkg`，不同版的操作系统）也能确保其他人下载这些代码到本地后编译时使用的包和发布者创建项目时用的包版本相同。
+通过`vcpkg-configuration.json`​配置后的项目即使在完全更换开发环境后（不同版本的`vcpkg`，不同的操作系统）也能确保其他人下载这些代码到本地后编译时使用的包和发布者创建项目时用的包版本相同。
 
 项目使用的包完全存放在`glutdemo/build`​下，而不是使用`vcpkg`全局安装的包，能有效避免版本冲突，起到环境隔离的作用。
 
@@ -143,7 +145,7 @@ int main(int argc, char** argv) {
 }
 ```
 
-最后创建`CMakeUserPresets.json`​配置本地`vcpkg`路径，该文件仅供本地使用
+最后创建`CMakeUserPresets.json`​配置本地`vcpkg`路径，该文件仅供本地使用（如果只想通过环境变量配置一个全局的`vcpkg`那么该文件也可以不用创建，后续重启`vscode`后预设使用上述`CMakePresets.json`的`vcpkg`预设即可）
 
 ```cmake
 {

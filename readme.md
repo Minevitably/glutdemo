@@ -44,6 +44,12 @@ vcpkg new --application
 
 根目录下会生成一个清单文件（包含项目中要用到的库，默认为空）`vcpkg.json`​，以及一个包管理器配置文件（配置包的来源，以及版本锁定，方便团队协作）`vcpkg-configuration.json`
 
+通过`vcpkg-configuration.json`​配置后的项目即使在完全更换开发环境后（不同版本的`vcpkg`，不同版的操作系统）也能确保其他人下载这些代码到本地后编译时使用的包和发布者创建项目时用的包版本相同。
+
+项目使用的包完全存放在`glutdemo/build`​下，而不是使用`vcpkg`全局安装的包，能有效避免版本冲突，起到环境隔离的作用。
+
+‍
+
 声明项目用到的`freeglut`依赖
 
 ```bash

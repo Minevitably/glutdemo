@@ -129,6 +129,8 @@ int main(int argc, char** argv) {
 
 为了使`cmake`​识别`vcpkg`​还需要创建`CMakePresets.json`​设置`vcpkg`工具链文件
 
+> 这里如果系统用的不是`msvc`编译器在实际项目中可能还是会报错找不到`glu`系列函数，对于`Visual Studio 2022`以及之前的版本可能还需要把源码改为`gb2312`编码。
+
 ```json
 {
   "version": 2,
@@ -172,7 +174,9 @@ int main(int argc, char** argv) {
 
 ![image](assets/image-20260119175147-ae4t2b9.png)
 
-构建完成后会在项目根目录下生成`build`​文件夹以及编译好的`exe`​文件，但是此时直接运行`glutdemo.exe`​会报错，通过将`glutdemo/build/vcpkg_installed/x64-windows/debug/bin`​下的`freeglutd.dll`​复制到`build/`下即可
+构建完成后会在项目根目录下生成`build`​文件夹以及编译好的`exe`​文件，但是此时直接运行`glutdemo.exe`可能​会报错，通过将`glutdemo/build/vcpkg_installed/x64-windows/debug/bin`​下的`freeglutd.dll`​复制到`build/`下即可
+
+> 如果通过`msvc`编译器编译则不会有这样的问题，它会自动将`dll`复制到`build/`下
 
 ![image](assets/image-20260119175856-tsokac9.png)
 
@@ -194,14 +198,14 @@ project(robert)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(OpenGL REQUIRED)
-find_package(FreeGLUT CONFIG REQUIRED)
+find_package(GLUT REQUIRED)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         OpenGL::GL
-        $<IF:$<TARGET_EXISTS:FreeGLUT::freeglut>,FreeGLUT::freeglut,FreeGLUT::freeglut_static>
+        GLUT::GLUT
 
 )
 ```

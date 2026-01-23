@@ -129,7 +129,7 @@ int main(int argc, char** argv) {
 
 为了使`cmake`​识别`vcpkg`​还需要创建`CMakePresets.json`​设置`vcpkg`工具链文件
 
-> 这里如果系统用的不是`msvc`编译器在实际项目中可能还是会报错找不到`glu`系列函数，对于`Visual Studio 2022`以及之前的版本可能还需要把源码改为`gb2312`编码。
+> 这里如果系统用的不是`msvc`编译器在实际项目中可能还是会报错找不到`glu`系列函数，对于`Visual Studio 2022`以及之前的版本可能还需要把源码改为`utf-8 with bom`或`gb2312`编码，`VS`从`2026`起才支持`utf-8`。
 
 ```json
 {
